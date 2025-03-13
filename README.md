@@ -60,13 +60,13 @@ g++ -o access_token access_token.cpp -lcurl -ljsoncpp -std=c++17
 g++ -o arbitrage arbitrage.cpp -pthread -lcurl -ljsoncpp -std=c++17
 ```
 
-6. Run the access_token:
+6. Run the file "access_token":
 ```bash
 ./access_token
 ```
-You will get an url, login your upstox account here then you will be redirected to a url, extract the last six characters of the redirected url which is your code and give this code as a input to the running program.
+You will get an url, login your upstox account here then you will be redirected to a url, extract the last six characters of the redirected url which is your code and enter this code as a input to the running program.
 
-7. Run the arbitrage:
+7. Run the file "arbitrage":
 ```bash
 ./arbitrage
 ```
