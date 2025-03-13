@@ -1,74 +1,102 @@
-Arbitrage Trading Simulation
+# Arbitrage Trading Simulation
 
-📌 Overview
+
+## 📌 Overview
 
 This project implements an Arbitrage Trading Simulation that detects price discrepancies between NSE (National Stock Exchange) and BSE (Bombay Stock Exchange) and simulates buy-sell orders accordingly. The system fetches real-time stock data and highlights arbitrage opportunities while considering all associated charges.
 
-🚀 Features
 
-Real-time Data Fetching: Fetches bid-ask prices for 220 stocks from both NSE and BSE using the Upstox Uplink API.
+## 🚀 Features
 
-Parallel Processing with Pthreads:
+📌 Real-time Data Fetching: Fetches last trade price (ltp) for 2000+ stocks from both NSE and BSE using the Upstox Uplink API.
 
-One thread fetches market data.
+📌 Parallel Processing with Pthreads: Multiple threads fetch market data for different subsets of stocks, Multiple threads handle different subsets of stocks for arbitrage detection.
 
-Multiple threads (e.g., 4) handle different subsets of stocks for arbitrage detection.
+📌 Synchronization Using Mutex: Ensures thread-safe data access while processing stock prices.
 
-Synchronization Using Mutex: Ensures thread-safe data access while processing stock prices.
+📌 Arbitrage Opportunity Detection: Calculates potential profits after accounting for transaction costs.
 
-Arbitrage Opportunity Detection: Calculates potential profits after accounting for transaction costs.
+📌 Efficient Execution: Uses cURL in C++ to interact with the API and process data efficiently.
 
-Efficient Execution: Uses cURL in C++ to interact with the API and process data efficiently.
 
-🛠️ Technologies Used
+## 🛠️ Technologies Used
 
-C++ (Primary language)
+📌 C++ (Primary language)
 
-Pthreads (For parallel processing)
+📌 Pthreads (For parallel processing)
 
-Mutex (For synchronization)
+📌 Mutex (For synchronization)
 
-cURL (For API communication)
+📌 cURL (For API communication)
 
-Upstox Uplink API (For real-time stock data)
+📌 Upstox Uplink API (For real-time stock data)
 
-🔧 Setup & Usage
 
-Clone the repository:
+## 🔧 Setup & Usage
 
-git clone https://github.com/your-username/arbitrage-trading.git
-cd arbitrage-trading
+1. Clone the repository
+```bash
+git clone https://github.com/jatinjindal1203/Arbitrage-Trading-Simulator.git
+cd Arbitrage-Trading-Simulator
+```
+2. Login to <https://account.upstox.com/developer/apps> and create an app then you will get your API_KEY and API_SECRET.
 
-Compile the program:
+3. Store the API_KEY, API_SECRET and REDIRECT_URI in api_keys.txt as
+```txt
+API_KEY = <YPUR_API_KEY>
+API_SECRET = <YOUR_API_SECRET>
+REDIRECT_URI = <YOUR_REDIRECT_URI>
+```
+REDIRECT_URI is same as you have entered while create an app.
 
-g++ -pthread -o arbitrage_simulator main.cpp -lcurl
+4. Install the dependencies:
+```bash
+sudo apt update
+sudo apt install -y curl libcurl4-openssl-dev nlohmann-json3-dev
+```
+5. Compile the program:
+```bash
+g++ -o access_token access_token.cpp -lcurl -ljsoncpp -std=c++17
+g++ -o arbitrage arbitrage.cpp -pthread -lcurl -ljsoncpp -std=c++17
+```
 
-Run the program:
+6. Run the access_token:
+```bash
+./access_token
+```
+You will get an url, login your upstox account here then you will be redirected to a url, extract the last six characters of the redirected url which is your code and give this code as a input to the running program.
 
-./arbitrage_simulator
+7. Run the arbitrage:
+```bash
+./arbitrage
+```
+First Enter your capital amount, then Enter minimum profit per trade, and see the arbitrage trade opportunities.
 
-📈 Arbitrage Strategy
 
-Fetch the bid-ask prices of stocks listed on both NSE & BSE.
+## 📈 Arbitrage Strategy
 
-Detect stocks where price differences exist after considering charges.
+1. Fetch the last trade price of stocks listed on both NSE & BSE.
+2. Detect stocks where price differences exist after considering charges.
+3. Simulate a trade by virtually selling at the higher-priced one and buying at the lower-priced exchange.
 
-Simulate a trade by virtually buying at the lower-priced exchange and selling at the higher-priced one.
 
-Log the arbitrage opportunities for analysis.
+## 📌 Future Improvements
 
-📌 Future Improvements
+1. Implementing actual trade execution instead of simulation.
+2. Enhancing performance with optimized data structures.
+3. Adding GUI for visualization of arbitrage opportunities.
 
-Implementing actual trade execution instead of simulation.
 
-Enhancing performance with optimized data structures.
+## 📈 One Catch
 
-Adding GUI for visualization of arbitrage opportunities.
+📌 In India you can take an arbitrage trade only those stocks which are present in your portfolio.
 
-🤝 Contributions
+
+## 🤝 Contributions
 
 Feel free to fork, modify, and contribute to this project! Open an issue if you find any bugs or have feature suggestions.
 
-📜 License
+
+## 📜 License
 
 This project is licensed under the MIT License.
